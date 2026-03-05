@@ -125,29 +125,14 @@
                 <div class="price-box">
                     <span class="old-price">R$ 29,90</span>
                     <span class="current-price">R$ 4,90</span>
-                    <span class="price-label">Taxa única de liberação</span>
+                    <span id="urgency-label" class="price-label">Promoção de liberação expira em:</span>
+                    <div id="pix-timer" class="timer">00:30</div>
                 </div>
 
-                <div class="payment-mock">
-                    <div class="payment-tabs">
-                        <button class="tab active">PIX</button>
-                        <button class="tab disabled">Cartão</button>
-                    </div>
-
-                    <div class="pix-area">
-                        <div class="qr-placeholder">
-                            <!-- Visual mock of QR -->
-                            <div class="qr-mock"></div>
-                        </div>
-                        <p class="timer" id="pix-timer">Expira em: 05:00</p>
-
-                        <!-- SIMULATION BUTTON -->
-                        <button id="simulate-payment-btn" class="btn primary-btn mock-btn">
-                            Simular Pagamento Aprovado
-                        </button>
-                        <p class="dev-note">*Apenas para fins de teste no protótipo</p>
-                    </div>
-                </div>
+                <button id="simulate-payment-btn" class="btn primary-btn">
+                    Acessar Laudo Completo
+                </button>
+            </div>
             </div>
         </section>
 
