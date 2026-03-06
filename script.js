@@ -265,6 +265,13 @@ async function generatePix() {
 
     try {
         const response = await fetch('/api/pix', { method: 'POST' });
+
+        if (!response.ok) {
+            const errorText = await response.text();
+            console.error('API Error Response:', errorText);
+            throw new Error(`Erro ${response.status}: ${errorText.substring(0, 100)}...`);
+        }
+
         const data = await response.json();
 
         if (data.id) {
@@ -286,7 +293,7 @@ async function generatePix() {
         }
     } catch (error) {
         console.error(error);
-        alert(`Erro: ${error.message}. Verifique se adicionou o TOKEN na Vercel e se fez um NOVO DEPLOY depois disso.`);
+        alert(`Erro: ${error.message}. Verifique os Logs da Vercel para mais detalhes ou se o arquivo api/pix.js está na raiz do seu GitHub.`);
         DOM.generatePixBtn.disabled = false;
         DOM.generatePixBtn.textContent = "Gerar PIX e Acessar Laudo";
         DOM.generatePixBtn.classList.remove('loading');
