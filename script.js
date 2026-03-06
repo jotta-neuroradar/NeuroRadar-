@@ -282,11 +282,11 @@ async function generatePix() {
             // Hide the initial button
             DOM.generatePixBtn.parentElement.classList.add('hidden');
         } else {
-            throw new Error('Falha ao gerar PIX');
+            throw new Error(data.error || 'Falha ao gerar PIX');
         }
     } catch (error) {
         console.error(error);
-        alert('Erro ao gerar pagamento. Por favor, tente novamente.');
+        alert(`Erro: ${error.message}. Verifique se adicionou o TOKEN na Vercel e se fez um NOVO DEPLOY depois disso.`);
         DOM.generatePixBtn.disabled = false;
         DOM.generatePixBtn.textContent = "Gerar PIX e Acessar Laudo";
         DOM.generatePixBtn.classList.remove('loading');
