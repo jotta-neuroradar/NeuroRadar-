@@ -1,0 +1,15 @@
+{
+  "name": "neuro-radar-adhd-quiz",
+  "version": "1.0.0",
+  "description": "ADHD Quiz with Mercado Pago integration",
+  "main": "index.html",
+  "scripts": {
+    "start": "serve ."
+  },
+  "dependencies": {
+    "mercadopago": "^2.2.0"
+  },
+  "devDependencies": {
+    "serve": "^14.2.0"
+  }
+}
