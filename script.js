@@ -120,7 +120,8 @@ const state = {
         total: 0
     },
     currentPaymentId: null,
-    pollingInterval: null
+    pollingInterval: null,
+    timerInterval: null
 };
 
 // --- 3. DOM ELEMENTS ---
@@ -246,6 +247,7 @@ function finishQuiz() {
         saveQuizData();
         switchScreen('paywall');
         trackEvent('quizcompleted');
+        startPixTimer(60); // Start 60s timer on paywall landing
     }, 4500);
 }
 
@@ -296,8 +298,7 @@ async function generatePix() {
             DOM.pixInput.value = data.qr_code;
             DOM.dynamicPixArea.classList.remove('hidden');
 
-            // Start Timer and Polling
-            startPixTimer();
+            // Start Polling (Timer now starts on paywall landing)
             startPollingStatus(data.id);
 
             // Hide the initial button
@@ -404,14 +405,16 @@ function generateResultContent() {
 }
 
 // --- 8. UTILS & INIT ---
-function startPixTimer() {
-    let timeLeft = 30; // 30 seconds urgency
-    const timerInterval = setInterval(() => {
+function startPixTimer(seconds = 60) {
+    if (state.timerInterval) clearInterval(state.timerInterval);
+    
+    let timeLeft = seconds;
+    state.timerInterval = setInterval(() => {
         const s = timeLeft.toString().padStart(2, '0');
         if (DOM.pixTimer) DOM.pixTimer.textContent = `00:${s}`;
 
         if (timeLeft <= 0) {
-            clearInterval(timerInterval);
+            clearInterval(state.timerInterval);
             if (DOM.pixTimer) DOM.pixTimer.textContent = "00:00";
             const urgencyLabel = document.getElementById('urgency-label');
             if (urgencyLabel) urgencyLabel.textContent = "Oferta encerrada!";
