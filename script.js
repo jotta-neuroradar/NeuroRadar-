@@ -158,6 +158,13 @@ const DOM = {
 };
 
 // --- 4. NAVIGATION LOGIC ---
+function trackEvent(eventName) {
+    if (typeof fbq === 'function') {
+        fbq('trackCustom', eventName);
+        console.log(`[Pixel] Event tracked: ${eventName}`);
+    }
+}
+
 function switchScreen(screenKey) {
     Object.values(screens).forEach(screen => {
         screen.classList.remove('active');
@@ -200,6 +207,12 @@ function renderQuestion() {
     });
     if (qIndex > 0) DOM.prevBtn.classList.remove('hidden');
     else DOM.prevBtn.classList.add('hidden');
+
+    // Track specific steps
+    const stepNumber = qIndex + 1;
+    if ([1, 5, 10, 15].includes(stepNumber)) {
+        trackEvent(`quizstep${stepNumber}`);
+    }
 }
 
 function handleAnswer(value) {
@@ -232,6 +245,7 @@ function finishQuiz() {
     setTimeout(() => {
         saveQuizData();
         switchScreen('paywall');
+        trackEvent('quizcompleted');
     }, 4500);
 }
 
@@ -319,6 +333,7 @@ function startPollingStatus(paymentId) {
 }
 
 function finishPaymentSuccess() {
+    trackEvent('Purchase');
     generateResultContent();
     switchScreen('result');
 }
